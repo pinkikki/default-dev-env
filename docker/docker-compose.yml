@@ -1,0 +1,30 @@
+# jenkins container
+jenkins:
+  image: jenkins
+  ports:
+  - "8080:8080"
+  volumes_from:
+     - jenkins_data
+ 
+# jenkins data
+jenkins_data:
+   image: jenkins
+   command: echo "jenkins data volumn"
+
+# postgres
+postgres-data:
+   image: busybox
+   volumes:
+       - /var/lib/postgresql/data
+   container_name: postgres-datastore
+
+postgresql:
+   image: postgres
+   environment:
+     POSTGRES_USER: hoge
+     POSTGRES_PASSWORD: password
+   ports:
+     - "5432:5432"
+   container_name: postgres-db
+   volumes_from:
+   - postgres-data
